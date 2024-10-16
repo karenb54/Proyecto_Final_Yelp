@@ -1,7 +1,7 @@
 <h1 align="center"><strong>Proyecto Final Yelp/Google - Análisis de Comercios en </strong></h1>  
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e76e31f4-53b6-4546-9a21-11e0b1e8c4ee" alt="herramientas-de-analisis-de-datos">
+  <img src="![image](https://github.com/user-attachments/assets/a79c380e-524d-41c9-b9cd-8d05ccb79e6c)" alt="herramientas-de-analisis-de-datos">
 </p>
 
 ## Descripción
