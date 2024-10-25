@@ -1,23 +1,20 @@
-<h1 align="center"><strong>Proyecto Final Yelp/Google - Análisis de Comercios en </strong></h1>  
+<h1 align="center"><strong>PROYECTO EXPANSION DE MERCADO </strong></h1>  
 
 <p align="center">
-  <img src="![image](https://github.com/user-attachments/assets/a79c380e-524d-41c9-b9cd-8d05ccb79e6c)" alt="herramientas-de-analisis-de-datos">
+  <img src="https://github.com/user-attachments/assets/42ea0531-a046-4082-b38f-80e370fd0a05" alt="Diferencias entre privacidad y protección de datos en EE.UU. y Europa" />
 </p>
 
 ## Descripción
 
-Este proyecto implementa un análisis profundo de los datos de las reseñas de comercios en Estados Unidos, utilizando herramientas de Python y Servicios de google. Fue desarrollado como parte de nuestra formación en **SoyHenry**. El análisis ofrece insights detallados para identificar oportunidades y desafíos en la mejora y el seguimiento de los comercios en Estados unidos, además de proporcionar recomendaciones a los usuarios para incentivar nuevas experencias basado en sus reseñas.
+Este proyecto tiene como objetivo asegurar que Nordsee se posicione exitosamente en EE. UU., adaptando su oferta sin perder su identidad y alcanzando una mayor penetración en los segmentos clave. Utilizando datos de reseñas de consumidores obtenidos a través de las APIs de Google Maps y Yelp, identificamos las expectativas y preferencias en el mercado de mariscos, así como oportunidades y desafíos para la marca en su expansión.
 
-El **dashboard interactivo** desarrollado en Google Data studio permite visualizar los datos de forma dinámica. Incluye **KPIs clave** para la proyección de nuevos comercios y la mejora de los mismos, estableciendo métricas de rendimiento con objetivos claros.
-
-Este proyecto nos permitió aplicar conocimientos teóricos y prácticos, así como mejorar y definir nuestres habilidades y roles usando los conocimientos previos y las fortalezas de cada uno de los integrantes del proyecto.
-
+Actualmente, en el primer sprint del proyecto, nos estamos enfocando en la creación de un ETL y un análisis exploratorio de datos (EDA). Este análisis inicial le proporcionará a Nordsee una visión detallada sobre la competencia y ayudará a determinar los estados donde la marca podría establecerse en un inicio, considerando tanto el análisis de la competencia como los gustos de la población a través de las reseñas.
 ---
 
 ## Tabla de Contenidos
 
 - [Instalación y Requisitos](#instalación-y-requisitos)
-- [Stack Tecnologico](#stack-tecnologica)
+- [Stack Tecnológico](#stack-tecnológico)
 - [Estructura del Proyecto](#estructura-del-proyecto)
 - [Metodología del Proyecto](#metodología-del-proyecto)
 - [Datos y Fuentes](#datos-y-fuentes)
@@ -31,7 +28,7 @@ Este proyecto nos permitió aplicar conocimientos teóricos y prácticos, así c
 
 1. Clonar el repositorio:
    
-    
+    git clone https://github.com/karenb54/Proyecto_Final_Yelp.git
 
 3. Crear un entorno virtual: python -m venv entorno_virtual
 
