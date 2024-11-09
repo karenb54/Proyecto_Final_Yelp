@@ -1,33 +1,38 @@
 <h1 align="center"><strong>PROYECTO EXPANSIÓN DE MERCADO</strong></h1>
 
 <p align="center">
-  ![Logo de InsightPro Consulting](path/to/logo.png) <!-- Reemplaza con la ruta del logo -->
+  <img src="https://github.com/user-attachments/assets/ed066285-cc6a-4e70-b32c-ebbea7a471b7" alt="Logo de Nordsee" />
 </p>
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/42ea0531-a046-4082-b38f-80e370fd0a05" alt="Diferencias entre privacidad y protección de datos en EE.UU. y Europa" />
-</p>
-
-## Descripción
-
-Este proyecto tiene como objetivo asegurar que Nordsee se posicione exitosamente en EE. UU., adaptando su oferta sin perder su identidad y alcanzando una mayor penetración en los segmentos clave. Utilizando datos de reseñas de consumidores obtenidos a través de las APIs de Google Maps y Yelp, identificamos las expectativas y preferencias en el mercado de mariscos, así como oportunidades y desafíos para la marca en su expansión.
-
-Actualmente, en el primer sprint del proyecto, nos estamos enfocando en la creación de un ETL y un análisis exploratorio de datos (EDA). Este análisis inicial le proporcionará a Nordsee una visión detallada sobre la competencia y ayudará a determinar los estados donde la marca podría establecerse en un inicio, considerando tanto el análisis de la competencia como los gustos de la población a través de las reseñas.
 
 ---
 
-## Tabla de Contenidos
+## **Descripción**
+
+Este proyecto tiene como objetivo asegurar que **Nordsee** se posicione exitosamente en el mercado de EE. UU., adaptando su oferta sin perder su identidad y alcanzando una mayor penetración en los segmentos clave. 
+
+Utilizando datos de reseñas obtenidos a través de APIs de Google Maps y Yelp, complementados con datos poblacionales y económicos del gobierno estadounidense, el proyecto busca identificar las expectativas y preferencias del mercado de mariscos y comida rápida. Esto permitirá a Nordsee desarrollar estrategias enfocadas en la calidad, sostenibilidad y frescura, mientras se exploran oportunidades en estados clave.
+
+Actualmente, estamos trabajando en:
+1. Construcción de un Data Warehouse utilizando **Google BigQuery**.
+2. Automatización del pipeline ETL con **Google Composer**.
+3. Análisis detallado en los estados con mayor interés en mariscos y evaluación de competidores.
+
+---
+
+## **Tabla de Contenidos**
 
 - [Instalación y Requisitos](#instalación-y-requisitos)
 - [Stack Tecnológico](#stack-tecnológico)
 - [Estructura del Proyecto](#estructura-del-proyecto)
 - [Metodología del Proyecto](#metodología-del-proyecto)
-- [Datos y Fuentes](#datos-y-fuentes)
-- [Resultados](#resultados)
+- [KPIs](#kpis)
+- [Resultados Obtenidos](#resultados-obtenidos)
+- [Recomendaciones](#recomendaciones)
+- [Autores](#autores)
 
 ---
 
-## Instalación y Requisitos
+## **Instalación y Requisitos**
 
 ### Pasos para instalar el proyecto:
 
@@ -67,15 +72,19 @@ Actualmente, en el primer sprint del proyecto, nos estamos enfocando en la creac
 
 ## Stack Tecnológico
 
-- **ETL**: Realizado en Visual Studio Code y Jupyter Notebook, utilizando librerías de Python como Spark y Pandas para la extracción, transformación y carga de los datos de reseñas.
+- **ETL**: Realizado en Visual Studio Code y Jupyter Notebook, realizando scripts en Python por medio de librerias como *Pandas*, *polars*, *spark*, *google.cloud* para la extracción, transformación y carga de los datos.
 
-- **EDA (Análisis Exploratorio de Datos)**: Desarrollado en Visual Studio Code y Jupyter Notebook, con el uso de librerías como *Polars*, *Pandas*, *NumPy*, *Pygwalker*, *Plotly* y *TextBlob* para un análisis detallado de la competencia y las preferencias de los consumidores.
+- **EDA reseñas (Análisis Exploratorio de Datos)**: Desarrollado en Visual Studio Code y Jupyter Notebook, con el uso de librerías como *Polars*, *Pandas*, *NumPy*, *Pygwalker*, *Plotly* y *TextBlob* para un análisis detallado de la competencia y las preferencias de los consumidores.  
+  
+- **EDA fuentes externas (Análisis Exploratorio de Datos externos)**: Desarrollado en Visual Studio Code y Jupyter Notebook, con el uso de librerías como *requests*, *Pandas*, *NumPy*, *Pygwalker*, *Plotly*, *seaborn* y *warnings* para un análisis detallado de la economia y la poblacion del pais.
 
-- **Presentación**: Las visualizaciones y la presentación del proyecto se realizaron en Canva, facilitando la comunicación de los hallazgos clave.
+- **Presentación**: Las visualizaciones y la presentación del proyecto se realizaron en Canva y draw.io facilitando la comunicación de los hallazgos clave.
 
 - **Almacenamiento**: Google Cloud Storage se utilizó para almacenar los datos obtenidos de las APIs, garantizando seguridad y fácil acceso.
 
-- **Data Warehouse**: Google BigQuery se implementará para organizar y consultar los datos de manera eficiente, escalando con el crecimiento del dataset.
+- - **Automatizacion**: Google Cloud Composer se utilizo para automatizar el pipeline escogido y ingestar la base de datos.
+
+- **Data Warehouse**: Google BigQuery se implemento para organizar y consultar los datos de manera eficiente, escalando con el crecimiento del dataset.
 
 - **Machine Learning**: Google Cloud Natural Language API y Google Recommendation se usarán para analizar el sentimiento en las reseñas y recomendar estrategias de acuerdo con las preferencias del cliente.
 
@@ -98,11 +107,15 @@ Actualmente, en el primer sprint del proyecto, nos estamos enfocando en la creac
 
 ## Metodología del Proyecto
 
-### Herramientas Utilizadas
+Por medio del siguiente pipeline establecido ![pipeline 1](https://github.com/user-attachments/assets/6e184d57-284f-4d88-8cbf-869364b27bcf) se realizo la carga de los datos tomando las fuentes de datos iniciales de yelp y de google y añadiendo datos poblacionales y economicos mediante apis del gobierno de estados unidos
+
 
 ### Proceso de Desarrollo
 
-Ver el README de la carpeta Notebooks: [Notebooks](https://github.com/karenb54/Proyecto_Final_Yelp/tree/main/Notebooks)
+**ETL GOOGLE MAPS** - Ver el README de la carpeta Notebooks: [Notebooks](https://github.com/karenb54/Proyecto_Final_Yelp/tree/main/Notebooks) 
+**ETL GOOGLE YELP** - Ver el README de la carpeta Notebooks: [Notebooks](https://github.com/karenb54/Proyecto_Final_Yelp/tree/main/Notebooks)
+**EDA DATOS EXTERNOS** - Ver el README de la carpeta Notebooks:
+**EDA DATOS INTERNOS** - Ver el README de la carpeta Notebooks:
 
 ---
 
