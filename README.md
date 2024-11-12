@@ -1,21 +1,22 @@
+<div align="right">
+  <span><strong>InsightPro Consulting</strong></span>
+  <img src="https://github.com/user-attachments/assets/5e2ff93f-31c3-489e-a78a-e233d306bf2f" alt="Logo InsightPro Consulting" width="50">
+</div>  
+
 <h1 align="center"><strong>PROYECTO EXPANSIÓN DE MERCADO</strong></h1>
 
+
+
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ed066285-cc6a-4e70-b32c-ebbea7a471b7" alt="Logo de Nordsee" />
+  <img src="https://github.com/user-attachments/assets/9171bac5-2e2b-4a5c-a7ae-e8c05cea53e1" alt="Expansión de negocio a EE.UU." width="300">
 </p>
 
----
 
 ## **Descripción**
 
 Este proyecto tiene como objetivo asegurar que **Nordsee** se posicione exitosamente en el mercado de EE. UU., adaptando su oferta sin perder su identidad y alcanzando una mayor penetración en los segmentos clave. 
 
 Utilizando datos de reseñas obtenidos a través de APIs de Google Maps y Yelp, complementados con datos poblacionales y económicos del gobierno estadounidense, el proyecto busca identificar las expectativas y preferencias del mercado de mariscos y comida rápida. Esto permitirá a Nordsee desarrollar estrategias enfocadas en la calidad, sostenibilidad y frescura, mientras se exploran oportunidades en estados clave.
-
-Actualmente, estamos trabajando en:
-1. Construcción de un Data Warehouse utilizando **Google BigQuery**.
-2. Automatización del pipeline ETL con **Google Composer**.
-3. Análisis detallado en los estados con mayor interés en mariscos y evaluación de competidores.
 
 ---
 
@@ -72,32 +73,21 @@ Actualmente, estamos trabajando en:
 
 ## Stack Tecnológico
 
-- **ETL**: Realizado en Visual Studio Code y Jupyter Notebook, realizando scripts en Python por medio de librerias como *Pandas*, *polars*, *spark*, *google.cloud* para la extracción, transformación y carga de los datos.
-
-- **EDA reseñas (Análisis Exploratorio de Datos)**: Desarrollado en Visual Studio Code y Jupyter Notebook, con el uso de librerías como *Polars*, *Pandas*, *NumPy*, *Pygwalker*, *Plotly* y *TextBlob* para un análisis detallado de la competencia y las preferencias de los consumidores.  
-  
-- **EDA fuentes externas (Análisis Exploratorio de Datos externos)**: Desarrollado en Visual Studio Code y Jupyter Notebook, con el uso de librerías como *requests*, *Pandas*, *NumPy*, *Pygwalker*, *Plotly*, *seaborn* y *warnings* para un análisis detallado de la economia y la poblacion del pais.
-
-- **Presentación**: Las visualizaciones y la presentación del proyecto se realizaron en Canva y draw.io facilitando la comunicación de los hallazgos clave.
-
-- **Almacenamiento**: Google Cloud Storage se utilizó para almacenar los datos obtenidos de las APIs, garantizando seguridad y fácil acceso.
-
-- - **Automatizacion**: Google Cloud Composer se utilizo para automatizar el pipeline escogido y ingestar la base de datos.
-
-- **Data Warehouse**: Google BigQuery se implemento para organizar y consultar los datos de manera eficiente, escalando con el crecimiento del dataset.
-
-- **Machine Learning**: Google Cloud Natural Language API y Google Recommendation se usarán para analizar el sentimiento en las reseñas y recomendar estrategias de acuerdo con las preferencias del cliente.
-
-- **Visualización**: Se utilizará Google Data Studio para crear dashboards interactivos y comunicar métricas clave de rendimiento.
-
-- **Despliegue**: Looker Studio se empleará para el despliegue final de las visualizaciones, permitiendo al cliente acceder a los insights en tiempo real.
+- **ETL**: Realizado con librerías como *Pandas*, *Polars*, *Spark* y *google-cloud* para extraer, transformar y cargar datos.
+- **EDA de reseñas**: Uso de *Polars*, *Pandas*, *Plotly*, *TextBlob* y *Pygwalker* para identificar preferencias de los consumidores.
+- **EDA de fuentes externas**: Uso de *requests*, *NumPy* y *Seaborn* para analizar datos poblacionales y económicos.
+- **Almacenamiento**: *Google Cloud Storage* para centralizar datos de forma segura.
+- **Automatización**: Pipeline ETL diseñado con *Google Composer*.
+- **Data Warehouse**: Organización eficiente de datos en *Google BigQuery*.
+- **Análisis de Sentimiento**: Uso de *Google Cloud Natural Language API*.
+- **Visualización**: Dashboards interactivos creados con *Google Data Studio*.
 
 ---
 
 ## Estructura del Proyecto
 
-- **Notebooks**: Archivos que contienen el código usado en cada paso del proceso.
-- **Datasets**: Archivos utilizados para visualizar y analizar los datos, divididos en datos de Google y de Yelp.
+- **Notebooks**: Archivos con el código de ETL, EDA y análisis.
+- **Datasets**: Readme con imagenes demostrativas de los datos almacenador y organizados en google cloud storage.
 - **Ayuda Visual**: Se incluyen todas las imágenes pertinentes para el proyecto.
 - **Documentación del cliente**: Contiene un espacio dedicado a la documentación necesaria para contextualizar al cliente.
 - **README.md**: Documentación completa del proyecto.
