@@ -12,13 +12,13 @@
 </p>
 
 
-## **Descripción**
+## **Descripción**  
 
-Este proyecto tiene como objetivo asegurar que **Nordsee** se posicione exitosamente en el mercado de EE. UU., adaptando su oferta sin perder su identidad y alcanzando una mayor penetración en los segmentos clave. 
+El objetivo de este proyecto es garantizar que [**Nordsee**](https://github.com/karenb54/Proyecto_Final_Yelp/blob/main/Documentacion%20cliente/Cliente.pdf) se posicione exitosamente en el mercado estadounidense, adaptando su oferta sin perder su identidad.  
 
-Utilizando datos de reseñas obtenidos a través de APIs de Google Maps y Yelp, complementados con datos poblacionales y económicos del gobierno estadounidense, el proyecto busca identificar las expectativas y preferencias del mercado de mariscos y comida rápida. Esto permitirá a Nordsee desarrollar estrategias enfocadas en la calidad, sostenibilidad y frescura, mientras se exploran oportunidades en estados clave.
+A través del análisis de reseñas de **Google Maps** y **Yelp**, complementado con datos poblacionales y económicos de fuentes oficiales, se busca identificar expectativas del mercado en mariscos y comida rápida. Esto permitirá a **Nordsee** desarrollar estrategias basadas en calidad, sostenibilidad y frescura, con un enfoque en estados clave.  
 
----
+El entregable final incluye un **dashboard interactivo** para visualizar insights y un **modelo de machine learning** que analizará las expectativas de los consumidores, apoyando decisiones estratégicas para la expansión inicial.  
 
 ## **Tabla de Contenidos**
 
@@ -95,51 +95,182 @@ Utilizando datos de reseñas obtenidos a través de APIs de Google Maps y Yelp, 
 
 ---
 
-## Metodología del Proyecto
+## Metodología del Proyecto  
 
-Por medio del siguiente pipeline establecido ![pipeline 1](https://github.com/user-attachments/assets/6e184d57-284f-4d88-8cbf-869364b27bcf) se realizo la carga de los datos tomando las fuentes de datos iniciales de yelp y de google y añadiendo datos poblacionales y economicos mediante apis del gobierno de estados unidos
+El proceso se desarrolla a través del siguiente pipeline establecido:  
 
-
-### Proceso de Desarrollo
-
-**ETL GOOGLE MAPS** - Ver el README de la carpeta Notebooks: [Notebooks](https://github.com/karenb54/Proyecto_Final_Yelp/tree/main/Notebooks) 
-**ETL GOOGLE YELP** - Ver el README de la carpeta Notebooks: [Notebooks](https://github.com/karenb54/Proyecto_Final_Yelp/tree/main/Notebooks)
-**EDA DATOS EXTERNOS** - Ver el README de la carpeta Notebooks:
-**EDA DATOS INTERNOS** - Ver el README de la carpeta Notebooks:
+![Pipeline del Proyecto](https://github.com/user-attachments/assets/6e184d57-284f-4d88-8cbf-869364b27bcf)  
 
 ---
 
-## KPIs
-
-### 1. KPI 1: Porcentaje de Reseñas de Mariscos vs. Total de Reseñas de Restaurantes
-- **Objetivo**: Determinar la visibilidad y relevancia del mercado de mariscos en EE. UU. en comparación con el mercado general de restaurantes.
-- **Métrica**: Porcentaje de reseñas de restaurantes de mariscos respecto al total de reseñas de restaurantes.
-- **Cálculo**: 
-  - Fórmula: 
-  ```plaintext
-  (Cantidad de reseñas de restaurantes de mariscos / Cantidad total de reseñas de restaurantes) × 100
+### 1. Fuente de Datos  
+- **Origen de los datos**:  
+  - *Google* y *Yelp*: Bases de datos con información sobre reseñas y comercios.  
+  - **APIs externas**:  
+    - Economía: *[FRED API](https://api.stlouisfed.org/fred/series/observations)*.  
+    - Población: *[Census API](https://api.census.gov/data/{0}/acs/acs5?get=NAME,{1}&for=us:*&key={2})*.  
 
 ---
 
-### 2. KPI 2: Análisis de Sentimiento de Reseñas de Competencia
-- **Objetivo**: Entender la percepción del cliente sobre la calidad, frescura y sostenibilidad de la oferta de la competencia.
-- **Métrica**: Promedio de puntaje de reseñas positivas (≥4 estrellas) en temas de calidad, servicio y sostenibilidad.
-- **Cálculo**:
-  - Fórmula:
-  ```plaintext
-  (Total de reseñas positivas / Total de reseñas de la competencia) × 100
+### 2. Carga de Datos  
+- **Herramienta**: Script en Python.  
+- **Procesos**:  
+  - Extracción de datos desde las APIs mencionadas.  
+  - Preprocesamiento inicial.  
+  - Carga de los datos crudos al *Google Cloud Storage*.  
 
 ---
 
-### 3. KPI 3: Posicionamiento Potencial de Nordsee en Estados Clave
-- **Objetivo**: Identificar los estados con mayor interés en mariscos donde Nordsee podría posicionarse favorablemente.
-- **Métrica**: Volumen de reseñas de mariscos en estados clave como indicador de interés de la población en esta categoría.
-- **Cálculo**:
-  - Fórmula:
-  ```plaintext
-  (Porcentaje de reseñas positivas en los estados seleccionados / Volumen total de reseñas en cada estado) × 100
+### 3. Datos Crudos  
+- **Descripción**:  
+  - Carpeta en *Google Cloud Storage* que contiene todos los datasets en su formato original, sin modificaciones.  
 
 ---
+
+### 4. Preprocesamiento  
+- **Herramienta**: Script en Python.  
+- **Procesos**:  
+  - Extracción de datos desde la carpeta *Datos Crudos* en *Google Cloud Storage*.  
+  - Limpieza inicial, que incluye:  
+    - Manejo de valores nulos y duplicados.  
+    - Normalización y transformación de campos según los requerimientos del análisis.  
+  - Carga de los datos procesados a la carpeta *datos-preprocesados* en *Google Cloud Storage*.  
+
+---
+
+### 5. Datos Preprocesados  
+- **Descripción**:  
+  - Carpeta en *Google Cloud Storage* que almacena los datos preprocesados.  
+  - Utilizados como base para:  
+    - Análisis exploratorio (*EDA*) realizado en *Jupyter Notebook*.  
+    - Identificación de insights clave.  
+    - Selección de datos relevantes para el cliente.  
+
+---
+
+### 6. Limpieza de Datos  
+- **Herramienta**: Script en Python.  
+- **Procesos**:  
+  - Extracción de datos desde la carpeta *Datos Preprocesados* en *Google Cloud Storage*.  
+  - Limpieza y filtrado final de la información.  
+  - Estructuración de los datos que serán utilizados en producción.  
+  - Carga de los datos limpios a la carpeta *datos-limpios* en *Google Cloud Storage*.  
+
+---
+
+### 7. Datos Limpios  
+- **Descripción**:  
+  - Carpeta en *Google Cloud Storage* que contiene los datos finales listos para ser utilizados en el pipeline de producción.  
+
+---
+
+### 8. Google Cloud Composer  
+- **Función**:  
+  - Orquestación del pipeline.  
+  - Automatización de los scripts mediante *DAGs*, asignando tareas paso a paso en el flujo de trabajo.  
+
+---
+
+### 9. Google BigQuery  
+- **Descripción**:  
+  - *Data Warehouse* que organiza y almacena la información limpia.  
+  - Estructurado con un modelo entidad-relación preestablecido, optimizado para consultas analíticas.  
+
+---
+
+### 10. Power BI  
+- **Función**:  
+  - Creación de análisis interactivos y dashboards.  
+  - Proporciona al cliente información clave para la toma de decisiones.  
+
+---
+
+### 11. Natural Language ML y Looker  
+- **Función**:  
+  - Implementación de herramientas de Machine Learning para análisis de sentimientos basado en los datos almacenados.  
+  - Proporcionan insights avanzados sobre el comportamiento y las preferencias de los consumidores.  
+
+---
+
+### 12. Carga Incremental  
+- **Herramienta**: Script en Python.  
+- **Función**:  
+  - Configuración de un disparador mensual para incorporar nuevos datos de forma incremental al pipeline.  
+
+## Proceso de Desarrollo  
+
+### GOOGLE  
+- **ETL Google Maps**  
+  [ETL_MAPS.py](https://github.com/karenb54/Proyecto_Final_Yelp/blob/main/Notebooks/ETL_MAPS.py)  
+- **EDA Datos Externos**  
+  *(Enlace pendiente o no proporcionado)*  
+- **README ETL Maps**  
+  [README_ETL_MAPS.md](https://github.com/karenb54/Proyecto_Final_Yelp/blob/main/Notebooks/README_ETL_MAPS.md)  
+
+---
+
+### YELP  
+- **ETL Yelp**  
+  [ETL_YELP.py](https://github.com/karenb54/Proyecto_Final_Yelp/blob/main/Notebooks/ETL_YELP.py)  
+- **EDA Datos Internos**  
+  [EDA_yelp_Final.ipynb](https://github.com/karenb54/Proyecto_Final_Yelp/blob/main/Notebooks/EDA_yelp_Final.ipynb)  
+- **README ETL Yelp**  
+  [README_ETL_YELP.md](https://github.com/karenb54/Proyecto_Final_Yelp/blob/main/Notebooks/README_ETL_YELP.md)  
+
+---
+
+### DATOS EXTERNOS  
+- **README Datos Externos**  
+  [README_DATOS_EXTERNOS.md](https://github.com/karenb54/Proyecto_Final_Yelp/blob/main/Notebooks/README_DATOS_EXTERNOS.md)  
+- **ETL/EDA Datos Económicos**  
+  [economic-us-data.ipynb](https://github.com/karenb54/Proyecto_Final_Yelp/blob/main/Notebooks/economic-us-data.ipynb)  
+- **ETL/EDA Datos Poblacionales**  
+  [demographic-data.ipynb](https://github.com/karenb54/Proyecto_Final_Yelp/blob/main/Notebooks/demographic-data.ipynb)  
+
+---  
+
+
+## KPIs  
+
+### 1. **Porcentaje de Reseñas de Mariscos vs. Total de Reseñas de Restaurantes**  
+- **Objetivo**:  
+  Determinar la visibilidad y relevancia del mercado de mariscos en EE. UU. en comparación con el mercado general de restaurantes.  
+- **Métrica**:  
+  Porcentaje de reseñas de restaurantes de mariscos respecto al total de reseñas de restaurantes.  
+- **Cálculo**:  
+  - **Fórmula**:  
+    ```plaintext
+    (Cantidad de reseñas de restaurantes de mariscos por mes / Cantidad total de reseñas de restaurantes por mes) × 100
+    ```  
+- **Frecuencia**: Mensual.  
+
+---
+
+### 2. **Análisis de Sentimiento de Reseñas de Competencia**  
+- **Objetivo**:  
+  Entender la percepción del cliente sobre la calidad, frescura y sostenibilidad de la oferta de la competencia.  
+- **Métrica**:  
+  Promedio de puntaje de reseñas positivas (≥4 estrellas) relacionadas con calidad, servicio y sostenibilidad.  
+- **Cálculo**:  
+  - **Fórmula**:  
+    ```plaintext
+    (Total de reseñas positivas de la competencia por mes / Total de reseñas de la competencia por mes) × 100
+    ```  
+- **Frecuencia**: Mensual.  
+
+---
+
+### 3. **Posicionamiento Potencial de Nordsee en Estados Clave**  
+- **Objetivo**:  
+  Identificar los estados con mayor interés en mariscos, donde Nordsee podría posicionarse favorablemente.  
+- **Métrica**:  
+  Volumen de reseñas de mariscos en estados clave como indicador del interés de la población en esta categoría.  
+- **Cálculo**:  
+  - **Fórmula**:  
+    ```plaintext
+    (Porcentaje de reseñas sobre mariscos en los estados seleccionados por mes / Volumen total de reseñas en cada estado por mes) × 100
+    ```  
+- **Frecuencia**: Mensual.  
 
 ## Resultados Obtenidos
 - **Reducción del tamaño de los datos**: Filtrar los usuarios top permitió reducir el conjunto de datos, facilitando un análisis más eficiente.
