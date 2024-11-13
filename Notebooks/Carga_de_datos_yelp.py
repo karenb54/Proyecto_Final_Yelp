@@ -4,6 +4,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 from google.cloud import storage
 import pandas as pd
+import json
 
 # Ruta absoluta (ajusta según tu sistema)
 CREDENTIALS_FILE = r"D:\DOCUMENTOS\DATA_SCIENCE\Documentos proyecto final\Proyecto_Final_Yelp\Notebooks\credencial_karen_propietario.json"
@@ -11,6 +12,7 @@ LOCAL_DATASETS_DIR = r"D:\DOCUMENTOS\DATA_SCIENCE\Documentos proyecto final\Proy
 
 FILES_TO_CONVERT = {
     "business.pkl": "business.parquet",
+    "review.json": "review.parquet",
     "checkin.json": "checkin.parquet",
     "tip.json": "tip.parquet",
     "user.parquet": "user.parquet",  # Ya está en formato Parquet
@@ -49,18 +51,53 @@ def convert_and_upload_to_gcs():
                 df = df.loc[:, ~df.columns.duplicated()]
 
             elif local_file.endswith(".json") or local_file.endswith(".json.crdownload"):
-                # Leer el archivo JSON usando dask
-                df = dd.read_json(local_path, lines=True)
-                # Convertir a pandas para guardar como Parquet
-                df = df.compute()
+                if local_file == "review.json":
+                    # Convertir 'review.json' en fragmentos
+                    parquet_writer = None
+                    chunk = []
+                    with open(local_path, 'r', encoding='utf-8') as f:
+                        for line in f:
+                            # Leer línea por línea el archivo JSON
+                            chunk.append(json.loads(line))
+
+                            # Si el tamaño del chunk alcanza un límite, convertirlo a Parquet
+                            if len(chunk) >= 100000:  # Ajusta este número según el tamaño de tu memoria disponible
+                                df_chunk = pd.DataFrame(chunk)
+                                table = pa.Table.from_pandas(df_chunk)
+
+                                # Inicializar el escritor de Parquet si es la primera vez
+                                if parquet_writer is None:
+                                    parquet_writer = pq.ParquetWriter(parquet_path, table.schema)
+
+                                # Escribir el fragmento en el archivo Parquet
+                                parquet_writer.write_table(table)
+
+                                # Limpiar el chunk
+                                chunk = []
+
+                    # Escribir cualquier fragmento restante que no se haya escrito
+                    if chunk:
+                        df_chunk = pd.DataFrame(chunk)
+                        table = pa.Table.from_pandas(df_chunk)
+                        parquet_writer.write_table(table)
+
+                    # Cerrar el escritor de Parquet
+                    if parquet_writer:
+                        parquet_writer.close()
+                    print(f"Archivo review.json convertido a Parquet en fragmentos: {parquet_path}")
+
+                else:
+                    # Leer el archivo JSON usando dask para otros archivos pequeños
+                    df = dd.read_json(local_path, lines=True)
+                    # Convertir a pandas para guardar como Parquet
+                    df = df.compute()
+                    # Guardar como Parquet
+                    table = pa.Table.from_pandas(df)
+                    pq.write_table(table, parquet_path)
+                    print(f"Archivo {local_file} convertido a Parquet: {parquet_path}")
             else:
                 print(f"Formato no soportado para {local_file}.")
                 continue
-
-            # Guardar como Parquet
-            table = pa.Table.from_pandas(df)
-            pq.write_table(table, parquet_path)
-            print(f"Archivo convertido a Parquet: {parquet_path}")
         else:
             parquet_path = local_path  # Ya es Parquet
 
