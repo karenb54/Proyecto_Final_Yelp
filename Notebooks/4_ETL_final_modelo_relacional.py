@@ -6,6 +6,9 @@ from google.cloud import storage
 import gcsfs
 import warnings
 
+import time
+start_time = time.time()
+
 # Ignorar todos los warnings
 warnings.filterwarnings("ignore")
 
@@ -88,3 +91,6 @@ df_reviews = df_filtrado.select([
 save_parquet_to_gcs(df_locales, BUCKET_NAME, "datos-limpios/yelp/tabla_dim_locals.parquet")
 save_parquet_to_gcs(df_estados, BUCKET_NAME, "datos-limpios/yelp/tabla_dim_estados.parquet")
 save_parquet_to_gcs(df_reviews, BUCKET_NAME, "datos-limpios/yelp/tabla_hecho_reviews.parquet")
+
+elapsed_time = time.time() - start_time
+print(f"Tiempo total de ejecución: {elapsed_time:.2f} segundos")
