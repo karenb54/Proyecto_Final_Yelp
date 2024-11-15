@@ -5,8 +5,11 @@ import pyarrow.parquet as pq
 from google.cloud import storage
 import pandas as pd
 import json
+import time
 
-# Ruta absoluta (ajusta según tu sistema)
+start_time = time.time()
+
+# Rutas
 CREDENTIALS_FILE = r"D:\DOCUMENTOS\DATA_SCIENCE\Documentos proyecto final\Proyecto_Final_Yelp\Notebooks\credencial_karen_propietario.json"
 LOCAL_DATASETS_DIR = r"D:\DOCUMENTOS\DATA_SCIENCE\Documentos proyecto final\Proyecto_Final_Yelp\Datasets"
 
@@ -115,3 +118,5 @@ def convert_and_upload_to_gcs():
 
 if __name__ == "__main__":
     convert_and_upload_to_gcs()
+    elapsed_time = time.time() - start_time
+    print(f"Tiempo total de ejecución: {elapsed_time:.2f} segundos")

@@ -9,6 +9,8 @@ import pyspark.sql.functions as F
 import glob
 import time
 
+start_time = time.time()
+
 #configuración de la autenticación para Google Cloud
 try:
     fs = gcsfs.GCSFileSystem(token="../Auth/credentials.json")
@@ -106,3 +108,5 @@ except Exception as e:
 #finalizar sesión de Spark
 spk.stop()
 print("Sesión de Spark finalizada.")
+elapsed_time = time.time() - start_time
+print(f"Tiempo total de ejecución: {elapsed_time:.2f} segundos")
