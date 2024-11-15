@@ -35,7 +35,7 @@ bucket = storage_client.bucket(BUCKET_NAME)
 df = read_parquet_files(PARQUET_PATH)
 
 #filtrar los estados que vamos a analizar
-estados_elegidos = ['CA', 'IL', 'NY', 'FL']
+estados_elegidos = ['PA', 'TN', 'FL']
 df_filtrado = df.filter(df['state'].is_in(estados_elegidos))
 
 #obtener el total de filas
