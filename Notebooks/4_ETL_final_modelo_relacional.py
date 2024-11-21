@@ -1,8 +1,9 @@
-"""Antes de ejecutar este codigo, debemos 
-tener los datos preprocesados meta_df.parquet en google"""
-#ULTIMO PASO DEL PROCESO ETL
+"""Antes de ejecutar este código, debemos tener los datos
+ preprocesados meta_df.parquet en Google."""
+#ULTIMO PASO DEL ETL
 
 import polars as pl
+import pandas as pd
 from google.cloud import storage
 import gcsfs
 import warnings
@@ -16,14 +17,14 @@ warnings.filterwarnings("ignore")
 #configuración de la autenticación y detalles del bucket
 CREDENTIALS_FILE = "credencial_karen_propietario.json"  #ruta al archivo de credenciales
 BUCKET_NAME = "bucket-proyecto-final-1"  #nombre del bucket
-PARQUET_PATH = "datos-limpios/yelp/meta_df.parquet"  #ruta relativa del archivo parquet
+PARQUET_PATH = "datos-limpios/yelp/meta_df.parquet"  #ruta relativa del archivo Parquet
 LOCAL_TEMP_PATH = "temp_filtered.parquet"  #archivo temporal para subida
 
 #configuración del cliente de GCS
 storage_client = storage.Client.from_service_account_json(CREDENTIALS_FILE)
 bucket = storage_client.bucket(BUCKET_NAME)
 
-#leer archivos Parquet desde GCS con polars
+#leer archivos Parquet desde GCS con Polars
 def read_parquet(bucket_name, remote_path):
     """Lee un archivo Parquet desde Google Cloud Storage usando Polars."""
     gcsfs_client = gcsfs.GCSFileSystem(token=CREDENTIALS_FILE)
@@ -35,7 +36,7 @@ def save_parquet_to_gcs(df, bucket_name, remote_path):
     """Guarda un DataFrame como archivo Parquet en Google Cloud Storage."""
     local_temp_path = LOCAL_TEMP_PATH
     
-    #guardar localmente en formato parquet
+    #guardar localmente en formato Parquet
     df.write_parquet(local_temp_path)
     
     #subir a GCS
@@ -89,9 +90,22 @@ df_reviews = df_filtrado.select([
     pl.col("stars_x").alias("stars_review")  
 ])
 
+#convertir df_locales a Pandas para filtrar categorías específicas
+categorias_elegidas = ["restaurant", "fast food", "seafood"]
+df_locales_pandas = df_locales.to_pandas()
+
+#filtrar cztegorías en Pandas
+df_locales_pandas['category'] = df_locales_pandas['category'].apply(lambda x: [cat.lower() for cat in x])
+df_locales_filtrado_pandas = df_locales_pandas[
+    df_locales_pandas['category'].apply(lambda x: any(cat in categorias_elegidas for cat in x))
+]
+
+#convertir de nuevo a Polars
+df_locales_filtrado = pl.from_pandas(df_locales_filtrado_pandas)
+
 #tabla Modelo para ML
 df_modelo = df_reviews.join(
-    df_locales.select(["id_local", "id_state"]),
+    df_locales_filtrado.select(["id_local", "id_state"]),
     on="id_local",
     how="inner"  #join interno por id_local
 ).select([
@@ -106,7 +120,7 @@ df_modelo = df_reviews.join(
 save_parquet_to_gcs(df_locales, BUCKET_NAME, "datos-limpios/yelp/tabla_dim_locals.parquet")
 save_parquet_to_gcs(df_estados, BUCKET_NAME, "datos-limpios/yelp/tabla_dim_estados.parquet")
 save_parquet_to_gcs(df_reviews, BUCKET_NAME, "datos-limpios/yelp/tabla_hecho_reviews.parquet")
-save_parquet_to_gcs(df_modelo, BUCKET_NAME, "datos-limpios/yelp/tabla_modelo.parquet") #cuarta tabla para ml
+save_parquet_to_gcs(df_modelo, BUCKET_NAME, "datos-limpios/yelp/tabla_modelo.parquet")  # cuarta tabla para ML
 
 elapsed_time = time.time() - start_time
 print(f"Tiempo total de ejecución: {elapsed_time:.2f} segundos")
