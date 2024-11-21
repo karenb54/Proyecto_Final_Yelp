@@ -96,6 +96,9 @@ Datos limpios y listos para análisis.
 **Propósito:**
 Integrar los datos limpios y generar un modelo relacional que facilite el análisis en herramientas como Power BI y BigQuery.
 
+**Filtrado:**
+Con este script hemos filtrado el 48.07% del DataFrame preprocesado.
+
 **Tablas Generadas:**
 
 1. **Tabla Dimensión LOCALES**:
@@ -104,6 +107,8 @@ Integrar los datos limpios y generar un modelo relacional que facilite el análi
    - `id_state`, `name_state`, `population`, `income`.
 3. **Tabla de Hecho REVIEW**:
    - `id_user`, `id_local`, `time`, `text`.
+4. **Tabla Modelo**:
+   - `id_local`, `time`, `review_text`, `stars`, `id_state`.
 
 ```python
 df_locales = df_filtrado.select([

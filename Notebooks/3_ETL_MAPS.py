@@ -109,3 +109,5 @@ spk.stop()
 print("Sesión de Spark finalizada.")
 elapsed_time = time.time() - start_time
 print(f"Tiempo total de ejecución: {elapsed_time:.2f} segundos")
+
+#github: https://github.com/matiasoviedo28
