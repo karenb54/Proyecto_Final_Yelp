@@ -1,5 +1,6 @@
 """Antes de ejecutar este codigo, debemos 
 tener los datos preprocesados meta_df.parquet en google"""
+#ULTIMO PASO DEL PROCESO ETL
 
 import polars as pl
 from google.cloud import storage
@@ -13,16 +14,16 @@ start_time = time.time()
 warnings.filterwarnings("ignore")
 
 #configuración de la autenticación y detalles del bucket
-CREDENTIALS_FILE = "credencial_karen_propietario.json"  #Ruta al archivo de credenciales
+CREDENTIALS_FILE = "credencial_karen_propietario.json"  #ruta al archivo de credenciales
 BUCKET_NAME = "bucket-proyecto-final-1"  #nombre del bucket
-PARQUET_PATH = "datos-limpios/yelp/meta_df.parquet"  #ruta relativa del archivo Parquet
+PARQUET_PATH = "datos-limpios/yelp/meta_df.parquet"  #ruta relativa del archivo parquet
 LOCAL_TEMP_PATH = "temp_filtered.parquet"  #archivo temporal para subida
 
-#configuración del cliente de Google Cloud Storage
+#configuración del cliente de GCS
 storage_client = storage.Client.from_service_account_json(CREDENTIALS_FILE)
 bucket = storage_client.bucket(BUCKET_NAME)
 
-#leer archivos Parquet desde GCS con Polars
+#leer archivos Parquet desde GCS con polars
 def read_parquet(bucket_name, remote_path):
     """Lee un archivo Parquet desde Google Cloud Storage usando Polars."""
     gcsfs_client = gcsfs.GCSFileSystem(token=CREDENTIALS_FILE)
@@ -34,7 +35,7 @@ def save_parquet_to_gcs(df, bucket_name, remote_path):
     """Guarda un DataFrame como archivo Parquet en Google Cloud Storage."""
     local_temp_path = LOCAL_TEMP_PATH
     
-    #guardar localmente en formato Parquet
+    #guardar localmente en formato parquet
     df.write_parquet(local_temp_path)
     
     #subir a GCS
@@ -61,7 +62,7 @@ porcentaje = (total_filas_df_filtrado / total_filas_df) * 100
 print(f"Hemos filtrado el {porcentaje:.2f}% del DataFrame preprocesado.")
 
 #crear tablas según el modelo relacional
-#tabla dimension LOCALES
+#tabla Dimensión LOCALES
 df_locales = df_filtrado.select([
     pl.col("business_id").alias("id_local"),
     pl.col("name").alias("name"),
@@ -69,7 +70,7 @@ df_locales = df_filtrado.select([
     pl.col("categories").alias("category")
 ]).unique()
 
-#tabla Dimension ESTADOS
+#tabla Dimensión ESTADOS
 estado_poblacion = {
     "PA": {"name_state": "Pennsylvania", "population": 13002700, "income": 63000},
     "TN": {"name_state": "Tennessee", "population": 6897576, "income": 52000},
@@ -84,14 +85,30 @@ df_reviews = df_filtrado.select([
     pl.col("user_id").alias("id_user"),
     pl.col("business_id").alias("id_local"),
     pl.col("date").alias("time"),
-    pl.col("text").alias("text"),
-    pl.col("stars_x").alias("stars_review")  #se incluye la columna de valoraciones reseña individual
+    pl.col("text").alias("review_text"),
+    pl.col("stars_x").alias("stars_review")  
+])
+
+#tabla Modelo para ML
+df_modelo = df_reviews.join(
+    df_locales.select(["id_local", "id_state"]),
+    on="id_local",
+    how="inner"  #join interno por id_local
+).select([
+    pl.col("id_local"),
+    pl.col("time"),
+    pl.col("review_text"),
+    pl.col("stars_review"),
+    pl.col("id_state")
 ])
 
 #guardar las tablas en GCS
 save_parquet_to_gcs(df_locales, BUCKET_NAME, "datos-limpios/yelp/tabla_dim_locals.parquet")
 save_parquet_to_gcs(df_estados, BUCKET_NAME, "datos-limpios/yelp/tabla_dim_estados.parquet")
 save_parquet_to_gcs(df_reviews, BUCKET_NAME, "datos-limpios/yelp/tabla_hecho_reviews.parquet")
+save_parquet_to_gcs(df_modelo, BUCKET_NAME, "datos-limpios/yelp/tabla_modelo.parquet") #cuarta tabla para ml
 
 elapsed_time = time.time() - start_time
 print(f"Tiempo total de ejecución: {elapsed_time:.2f} segundos")
+
+#github: https://github.com/matiasoviedo28
