@@ -99,7 +99,7 @@ El entregable final incluye un **dashboard interactivo** para visualizar insight
 
 El proceso se desarrolla a través del siguiente pipeline establecido:  
 
-![Pipeline del Proyecto](https://github.com/user-attachments/assets/6e184d57-284f-4d88-8cbf-869364b27bcf)  
+![Pipeline del Proyecto](Notebooks/pipline.png)  
 
 ---
 
