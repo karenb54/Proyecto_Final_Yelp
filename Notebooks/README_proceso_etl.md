@@ -174,6 +174,7 @@ Este pipeline ETL transforma datos crudos de múltiples fuentes en un modelo rel
    - `LOCALES.parquet`
    - `ESTADOS.parquet`
    - `REVIEW.parquet`
+   - - `tabla_modelo.parquet`
 
 2. **Ventajas del Proceso:**
    - Datos organizados y listos para análisis.
